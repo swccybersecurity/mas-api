@@ -1,7 +1,6 @@
 {
   "name": "mas-playstore-api",
   "version": "1.0.0",
-  "type": "module",
   "dependencies": {
     "google-play-scraper": "^9.1.0"
   }
