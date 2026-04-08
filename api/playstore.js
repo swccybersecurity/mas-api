@@ -1,16 +1,15 @@
-import gplay from ‘google-play-scraper’;
-
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
 res.setHeader(‘Access-Control-Allow-Origin’, ‘*’);
-res.setHeader(‘Access-Control-Allow-Methods’, ‘GET’);
 
 const { id } = req.query;
-if (!id) return res.status(400).json({ error: ‘Missing package id’ });
+if (!id) return res.status(400).json({ error: ‘Missing id’ });
 
 try {
-const data = await gplay.app({ appId: id, country: ‘tw’, lang: ‘zh-TW’ });
+const gplay = await import(‘google-play-scraper’);
+const scraper = gplay.default || gplay;
+const data = await scraper.app({ appId: id, country: ‘tw’, lang: ‘zh-TW’ });
 res.status(200).json({ version: data.version, title: data.title });
 } catch (e) {
-res.status(404).json({ error: ‘App not found’, detail: e.message });
+res.status(404).json({ error: ‘Not found’, detail: e.message });
 }
-}
+};
