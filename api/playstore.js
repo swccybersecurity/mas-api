@@ -5,12 +5,13 @@ module.exports = async (req, res) => {
   if (!id) return res.status(400).json({ error: 'Missing id' });
   
   try {
-    const gplay = await import('google-play-scraper');
-    const s = gplay.default || gplay;
-    const data = await s.app({ appId: id, country: 'tw' });
+    const m = await import('google-play-scraper');
+    const gplay = m.default ?? m;
+    const app = gplay.app ?? gplay.default?.app;
+    const data = await app({ appId: id, country: 'tw' });
     
     res.status(200).json({ version: data.version, title: data.title });
   } catch (e) {
-    res.status(404).json({ error: 'Not found', detail: e.message });
+    res.status(500).json({ error: e.message });
   }
 };
