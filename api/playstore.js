@@ -1,4 +1,4 @@
-import gplay from ‘google-play-scraper’;
+const gplay = require(‘google-play-scraper’);
 
 export default async function handler(req, res) {
 res.setHeader(‘Access-Control-Allow-Origin’, ‘*’);
